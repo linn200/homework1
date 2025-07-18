@@ -29,40 +29,23 @@ $$
 
 ```cpp
 #include <iostream>
-#include "ackermann.h"
+#include "Header.h"
 using namespace std;
 
-// 遞迴實現 Ackermann 函數
 int ackermann_recursive(int m, int n) {
-    if (m == 0) return n + 1;
-    else if (n == 0) return ackermann_recursive(m - 1, 1);
-    else return ackermann_recursive(m - 1, ackermann_recursive(m, n - 1));
-}
-
-// 非遞迴實現 Ackermann 函數，使用堆疊
-int ackermann_nonrecursive(int m, int n) {
-    stack<pair<int, int>> s;
-    s.push({m, n});
-    while (!s.empty()) {
-        m = s.top().first;
-        n = s.top().second;
-        s.pop();
-        if (m == 0) continue; // m == 0 時，結果為 n + 1，後處理
-        else if (n == 0) s.push({m - 1, 1});
-        else {
-            s.push({m - 1, 0}); // 儲存 A(m-1, result) 的 m-1
-            s.push({m, n - 1}); // 計算 A(m, n-1)
-        }
-    }
-    return n + 1; // 最終結果，考慮 m == 0 情況
+    if (m == 0)
+        return n + 1;
+    else if (n == 0)
+        return ackermann_recursive(m - 1, 1);
+    else
+        return ackermann_recursive(m - 1, ackermann_recursive(m, n - 1));
 }
 
 int main() {
     int m, n;
     cout << "Enter m and n: ";
     cin >> m >> n;
-    cout << "A(" << m << ", " << n << ") (Recursive) = " << ackermann_recursive(m, n) << endl;
-    cout << "A(" << m << ", " << n << ") (Non-recursive) = " << ackermann_nonrecursive(m, n) << endl;
+    cout << "Ackermann(" << m << ", " << n << ") = " << ackermann_recursive(m, n) << endl;
     return 0;
 }
 ```
@@ -135,16 +118,18 @@ A(1, 2) = 4
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
-#include "powerset.h"
+#include <algorithm> 
+#include "Header.h"
 using namespace std;
 
 void powerset(const string& s, int index, string current, vector<string>& result) {
-    result.push_back(current); // 加入當前子集
+
+    result.push_back(current);
+
     for (int i = index; i < s.length(); i++) {
-        current += s[i]; // 包含當前元素
-        powerset(s, i + 1, current, result); // 遞迴
-        current.pop_back(); // 回溯
+        current += s[i]; 
+        powerset(s, i + 1, current, result);
+        current.pop_back();
     }
 }
 
@@ -152,9 +137,12 @@ int main() {
     string s;
     cout << "Enter the set elements (e.g., 'abc'): ";
     cin >> s;
+
     vector<string> result;
     powerset(s, 0, "", result);
-    sort(result.begin(), result.end()); // 按字典序排序
+
+    sort(result.begin(), result.end());
+
     cout << "Powerset of {" << s << "} = { ";
     for (size_t i = 0; i < result.size(); i++) {
         cout << "{";
@@ -166,6 +154,7 @@ int main() {
         if (i < result.size() - 1) cout << ", ";
     }
     cout << " }" << endl;
+
     return 0;
 }
 ```
