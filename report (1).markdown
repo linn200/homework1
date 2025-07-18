@@ -8,14 +8,12 @@ Ackermann 函數 $A(m, n)$ 是一個遞迴定義的函數，增長極快，用�
 
 #### 遞迴實現
 直接根據數學定義實現：
-$$
-A(m, n) =
+$$A(m, n) =
 \begin{cases} 
 n + 1 & \text{if } m = 0 \\
 A(m-1, 1) & \text{if } m > 0 \text{ and } n = 0 \\
 A(m-1, A(m, n-1)) & \text{if } m > 0 \text{ and } n > 0 
-\end{cases}
-$$
+\end{cases}$$
 
 #### 非遞迴實現
 使用堆疊模擬遞迴過程，儲存 $(m, n)$ 狀態，逐步計算每個遞迴步驟。
